@@ -150,13 +150,3 @@ def data_object_maker(title: str, author: str, summary: str, chapter_titles_arra
     } for index in range(len(chapter_content_array))]
 
     return data
-
-
-title = "Second Try Idol"
-author = "Tinta"
-summary = "Six years after being ousted from his debut group due to facial burns, Suh Hyun-Woo finds himself regressing back to his days as a trainee, engulfed once more in the world of ruthless competition. This time, he's determined: he will make his debut, no matter what it takes"
-with open('sample.json', 'r') as openfile:
-    json_object = json.load(openfile)
-
-data = data_object_maker(title, author, summary, json_object.get("titles"), json_object.get("content"))
-parser(data, 'output')

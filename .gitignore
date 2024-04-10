@@ -1,4 +1,15 @@
 venv
+
 output.html
+
 sample.json
-template_.html
+
+testing.py
+
+__pycache__
+
+# Ignore all .html files
+*.html
+
+# Except template.html
+!template.html
