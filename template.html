@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Novel Template</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lunasima:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="work lunasima-regular">
+        <div class="info">
+            <p class="title heading">
+                <replace id="title"></replace>
+            </p>
+            <p class="byline heading">
+                <p class="heading"><replace id="author"></replace></p>
+            </p>
+            <div class="preface">
+                <div class="summary">
+                    <p class="heading byline seperator">Summary:</p>
+                    <blockquote>
+                        <p class="summary-text"><replace id="summary"></replace></p>
+                    </blockquote>
+                </div>
+            </div>
+        </div>
+        
+        <div class="seperator section-end"></div>
+
+        <div class="chapters" role="article">
+        </div>
+    </div>
+</body>
+</html>
