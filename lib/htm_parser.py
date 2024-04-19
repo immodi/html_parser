@@ -1,5 +1,4 @@
 from bs4 import BeautifulSoup as soup
-import json
 
 chapter_html_template = """
     <div class="chapter keep-together">
@@ -18,7 +17,139 @@ html_template = """
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Novel Template</title>
-        <link rel="stylesheet" href="style.css">
+        <style>
+            * {
+                box-sizing: border-box;
+                margin: 0;
+                padding: 0;
+            }
+
+            .lunasima-regular {
+                font-family: "Lunasima", sans-serif;
+                font-weight: 400;
+                font-size: 120%;
+                font-style: normal;
+                color: black;
+                background-color: white;
+                border-bottom-color: black;
+            }
+
+            .keep-together {
+                page-break-inside: avoid;
+            }
+
+            .break-before {
+                page-break-before: always;
+            }
+
+            .break-after {
+                page-break-after: always;
+            }
+
+            .work {
+                display: flex;
+                flex-direction: column;
+                padding: 1rem;
+                align-items: center;
+                justify-content: center;
+                text-align: center;
+            }
+
+            .info {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .preface {
+                display: flex;
+                width: 100%;
+                margin-top: 1rem;
+                line-height: 30px;
+                justify-content: center;
+                align-items: center;
+                text-align: left;
+            }
+
+            .heading {
+                text-decoration: none;
+                margin-top: 0.1rem;
+                margin-bottom: 0.1rem;
+                font-weight: 400;
+            }
+
+            .byline {
+                font-size: larger;
+                padding-bottom: .5rem;
+            }
+
+            .title {
+                font-size: xx-large;
+            }
+
+            .seperator {
+                width: 100%;
+                border-bottom-width: 1px;
+                border-bottom-style: solid;
+                justify-content: center;
+                align-items: center;
+                text-align: left;
+            }
+
+            .summary-text {
+                margin-left: 15px;
+                margin-top: 1rem;
+            }
+
+            .section-end {
+                margin-top: 2rem;
+                margin-bottom: 5rem;
+                width: 100%;
+                align-self: center;
+                border-bottom-width: 2px;
+                border-bottom-style: solid;
+            }
+
+            .chapters {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                flex-direction: column;
+            }
+
+            .chapter {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .chapter-title {
+                margin-top: -3rem;    
+            }
+
+            .chapter-title > span {
+                border-bottom-width: 1px;
+                border-bottom-style: solid;
+            }
+
+            .content {
+                text-decoration: none;
+                font-weight: 400;
+                justify-content: center;
+                align-items: center;
+                text-align: left;
+                line-height: 1.5;
+                font-size: 1em;
+                width: 100%;
+            }        
+
+            .content > p {
+                margin-top: 2rem;
+                margin-bottom: 2rem;
+            }
+        </style>
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Lunasima:wght@400;700&display=swap" rel="stylesheet">
