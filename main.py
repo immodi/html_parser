@@ -2,27 +2,21 @@ from bs4 import BeautifulSoup as soup
 
 data = {
     "info": {
-        "title": "title",
-        "author": "immodi",
-        "summary": "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Exercitationem iure eius doloribus mollitia eos quibusdam, ea maxime illum dolor incidunt, illo, harum eaque reprehenderit soluta amet",
+        "title": "",
+        "author": "",
+        "summary": "",
     },
     "content": [
         {
-            "chapterTitle": "cahp_1",
+            "chapterTitle": "",
             "chapterContent": [
-                "        Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum nam debitis cum eius earum quod suscipit consectetur similique nostrum quam autem in accusamus, necessitatibus voluptatum, ab odio natus eum consequuntur!",
-                "        Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum nam debitis cum eius earum quod suscipit consectetur similique nostrum quam autem in accusamus, necessitatibus voluptatum, ab odio natus eum consequuntur!",
-                "        Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum nam debitis cum eius earum quod suscipit consectetur similique nostrum quam autem in accusamus, necessitatibus voluptatum, ab odio natus eum consequuntur!",
-                "        Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum nam debitis cum eius earum quod suscipit consectetur similique nostrum quam autem in accusamus, necessitatibus voluptatum, ab odio natus eum consequuntur!",
+                ""
             ]
         },
         {
-            "chapterTitle": "cahp_2",
+            "chapterTitle": "",
             "chapterContent": [
-                "        Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum nam debitis cum eius earum quod suscipit consectetur similique nostrum quam autem in accusamus, necessitatibus voluptatum, ab odio natus eum consequuntur!",
-                "        Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum nam debitis cum eius earum quod suscipit consectetur similique nostrum quam autem in accusamus, necessitatibus voluptatum, ab odio natus eum consequuntur!",
-                "        Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum nam debitis cum eius earum quod suscipit consectetur similique nostrum quam autem in accusamus, necessitatibus voluptatum, ab odio natus eum consequuntur!",
-                "        Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum nam debitis cum eius earum quod suscipit consectetur similique nostrum quam autem in accusamus, necessitatibus voluptatum, ab odio natus eum consequuntur!",
+                ""
             ]
         },
     ]

@@ -34,9 +34,9 @@ html_template = """
                 border-bottom-color: black;
             }
 
-            .keep-together {
+            /* .keep-together {
                 page-break-inside: avoid;
-            }
+            } */
 
             .break-before {
                 page-break-before: always;
