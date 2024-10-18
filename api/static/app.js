@@ -1,13 +1,16 @@
-// const form = document.querySelector(".form");
-// form.addEventListener("submit", function (e) {
-//     // Show spinner when form is submitted
-//     const spinner = document.createElement("div");
-//     spinner.classList.add("spinner-container");
-//     spinner.innerHTML = `
-//      <div class="spinner-container">
-//         <span class="loader"></span>
-//     </div>
-//     `;
+const button = document.querySelector("#submitButton");
+const form = document.querySelector(".form");
 
-//     document.body.appendChild(spinner); // Append spinner to the body
-// });
+button.addEventListener("click", () => {
+    const newDiv = document.createElement("div");
+    newDiv.classList.add("replaced-div");
+
+    newDiv.innerHTML = `
+        <div class="spinner-container">
+            <span class="loader"></span>
+        </div>
+    `;
+
+    button.replaceWith(newDiv);
+    form.submit();
+});
