@@ -41,14 +41,14 @@ async def root(request: Request):
     return templates.TemplateResponse("home.html", {"request": request})
 
 
-@app.get("/spinner", response_class=HTMLResponse)
-async def get_spinner():
-    html_content = """
-        <div class="spinner-container">
-            <span class="loader"></span>
-        </div>
-    """
-    return HTMLResponse(content=html_content, status_code=200)
+@app.get("/main", response_class=HTMLResponse)
+async def get_main(request: Request):
+    return templates.TemplateResponse("main.html", {"request": request})
+
+
+@app.get("/test", response_class=HTMLResponse)
+async def get_test(request: Request):
+    return templates.TemplateResponse("test.html", {"request": request})
 
 
 @app.post("/")
