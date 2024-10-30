@@ -1,3 +1,15 @@
+import json
+from lib.htm_parser import parser, data_object_maker
+from pydantic import BaseModel
+from fastapi.templating import Jinja2Templates
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import (
+    HTMLResponse,
+    JSONResponse,
+    FileResponse,
+    StreamingResponse,
+)
+from fastapi import FastAPI, Form, File, UploadFile, Request
 import sys
 from pathlib import Path
 from typing import List
@@ -5,18 +17,6 @@ from typing import List
 lib_dir = Path("../").__str__()
 sys.path.insert(0, str(lib_dir))
 
-from fastapi import FastAPI, Form, File, UploadFile, Request
-from fastapi.responses import (
-    HTMLResponse,
-    JSONResponse,
-    FileResponse,
-    StreamingResponse,
-)
-from fastapi.staticfiles import StaticFiles
-from fastapi.templating import Jinja2Templates
-from pydantic import BaseModel
-from lib.htm_parser import parser, data_object_maker
-import json
 
 app = FastAPI()
 
@@ -86,11 +86,15 @@ async def handle_form(
         parser(data, "file")
 
         filename = "file.html"
-        response = StreamingResponse(
-            open(filename, "rb"), media_type="application/octet-stream"
-        )
+        # response = StreamingResponse(
+        #     open(filename, "rb"), media_type="application/octet-stream"
+        # )
+        response = FileResponse(filename)
 
-        response.headers["Content-Disposition"] = f"attachment; filename={filename}"
+        response.headers["Content-Disposition"] = (
+            f"attachment; filename={
+            filename}"
+        )
         return response
 
     except Exception as e:

@@ -1,25 +1,8 @@
 const button = document.querySelector("#submitButton");
 const form = document.querySelector(".form");
-const ButtonLoader = Object.freeze({
-    BUTTON: `
-        <button type="submit" id="submitButton" class="submit-button">
-            Submit
-        </button>
-    `,
-    LOADING: `
-        <div class="spinner-container">
-            <span class="loader"></span>
-        </div>
-    `,
-});
 
 button.addEventListener("click", (e) => {
-    e.preventDefault();
-    replaceButton(ButtonLoader.LOADING);
-
-    submitForm()
-        .then(() => replaceButton(ButtonLoader.BUTTON))
-        .finally(() => replaceButton(ButtonLoader.BUTTON));
+    buttonEventListner(e, button);
 });
 
 async function submitForm() {
@@ -48,8 +31,6 @@ async function submitForm() {
             // Cleanup the DOM
             document.body.removeChild(link);
             URL.revokeObjectURL(link.href);
-
-            replaceButton(ButtonLoader.BUTTON);
         } else {
             const errorData = await response.json();
             console.error("Error:", errorData.message);
@@ -59,11 +40,39 @@ async function submitForm() {
     }
 }
 
-function replaceButton(option) {
-    const newDiv = document.createElement("div");
-    newDiv.id = "submitButton";
+function replaceWithLoader(element) {
+    const spinnerElement = () => {
+        const spinner = document.createElement("div");
+        spinner.classList.add("spinner-container");
+        spinner.id = "spinner";
 
-    newDiv.innerHTML = option;
+        const loader = document.createElement("span");
+        loader.classList.add("loader");
+        spinner.appendChild(loader);
 
-    document.querySelector("#submitButton").replaceWith(newDiv);
+        return spinner;
+    };
+
+    const copy = getElementCopy(element, buttonEventListner);
+    element.replaceWith(spinnerElement());
+    return () => {
+        document.querySelector("#spinner").replaceWith(copy);
+    };
+}
+
+function getElementCopy(element, eventListner) {
+    const copy = element.cloneNode(true);
+    copy.addEventListener("click", (e) => {
+        eventListner(e, copy);
+    });
+
+    return copy;
+}
+
+function buttonEventListner(e, element) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    const callback = replaceWithLoader(element);
+    submitForm().finally(() => callback());
 }
