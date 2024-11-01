@@ -41,9 +41,9 @@ async def root(request: Request):
     return templates.TemplateResponse("home.html", {"request": request})
 
 
-@app.get("/main", response_class=HTMLResponse)
+@app.get("/pdf-form", response_class=HTMLResponse)
 async def get_main(request: Request):
-    return templates.TemplateResponse("main.html", {"request": request})
+    return templates.TemplateResponse("pdf_form.html", {"request": request})
 
 
 @app.post("/pdf")
