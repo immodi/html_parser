@@ -9,7 +9,7 @@ async function submitForm() {
     const formData = new FormData(form);
 
     try {
-        const response = await fetch("/", {
+        const response = await fetch("/pdf", {
             method: "POST",
             body: formData,
         });

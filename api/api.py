@@ -1,5 +1,5 @@
 import json
-from lib.htm_parser import parser, data_object_maker
+from lib.html_parser import data_object_maker, parser
 from pydantic import BaseModel
 from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
@@ -7,18 +7,17 @@ from fastapi.responses import (
     HTMLResponse,
     JSONResponse,
     FileResponse,
-    StreamingResponse,
 )
+import asyncio
+
 from fastapi import FastAPI, Form, File, UploadFile, Request
-import sys
 from pathlib import Path
 from typing import List
-
-lib_dir = Path("../").__str__()
-sys.path.insert(0, str(lib_dir))
-
+import pdfkit
+from os import remove
 
 app = FastAPI()
+config = pdfkit.configuration(wkhtmltopdf="./wkhtmltopdf")
 
 app.mount("/static", StaticFiles(directory="static"), name="static")
 templates = Jinja2Templates(directory="templates")
@@ -46,12 +45,7 @@ async def get_main(request: Request):
     return templates.TemplateResponse("main.html", {"request": request})
 
 
-@app.get("/test", response_class=HTMLResponse)
-async def get_test(request: Request):
-    return templates.TemplateResponse("test.html", {"request": request})
-
-
-@app.post("/")
+@app.post("/pdf")
 async def handle_form(
     title: str = Form(...),
     author: str = Form(...),
@@ -83,21 +77,35 @@ async def handle_form(
         )
 
         # Assuming parser is also a synchronous function
-        parser(data, "file")
+        parser(data, title)
 
-        filename = "file.html"
-        # response = StreamingResponse(
-        #     open(filename, "rb"), media_type="application/octet-stream"
-        # )
+        html_filename = f"{title}.html"
+        filename = f"{title}.pdf"
+
+        pdfkit.from_file(html_filename, filename, configuration=config)
+
         response = FileResponse(filename)
 
         response.headers["Content-Disposition"] = (
             f"attachment; filename={
             filename}"
         )
+
+        await delete_file(html_filename)
+
         return response
 
     except Exception as e:
         return JSONResponse(
             content={"status": "error", "message": str(e)}, status_code=400
         )
+
+
+async def delete_file(file_path: str):
+    try:
+        remove(file_path)
+        print(f"{file_path} has been deleted.")
+    except FileNotFoundError:
+        print(f"{file_path} does not exist.")
+    finally:
+        return
