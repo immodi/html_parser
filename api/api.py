@@ -8,13 +8,14 @@ from fastapi.responses import (
     JSONResponse,
     FileResponse,
 )
-import asyncio
-
-from fastapi import FastAPI, Form, File, UploadFile, Request
+from glob import glob
+from fastapi import FastAPI, Form, File, UploadFile, Request, BackgroundTasks
 from pathlib import Path
 from typing import List
 import pdfkit
 from os import remove
+import asyncio
+
 
 app = FastAPI()
 config = pdfkit.configuration(wkhtmltopdf="./wkhtmltopdf")
@@ -47,6 +48,7 @@ async def get_main(request: Request):
 
 @app.post("/pdf")
 async def handle_form(
+    background_tasks: BackgroundTasks,
     title: str = Form(...),
     author: str = Form(...),
     summary: str = Form(...),
@@ -77,10 +79,11 @@ async def handle_form(
         )
 
         # Assuming parser is also a synchronous function
-        parser(data, title)
+        base_filename = f"output/{title}"
+        parser(data, base_filename)
 
-        html_filename = f"{title}.html"
-        filename = f"{title}.pdf"
+        html_filename = f"{base_filename}.html"
+        filename = f"{base_filename}.pdf"
 
         pdfkit.from_file(html_filename, filename, configuration=config)
 
@@ -91,8 +94,7 @@ async def handle_form(
             filename}"
         )
 
-        await delete_file(html_filename)
-
+        background_tasks.add_task(delete_file, base_filename)
         return response
 
     except Exception as e:
@@ -101,11 +103,14 @@ async def handle_form(
         )
 
 
-async def delete_file(file_path: str):
-    try:
-        remove(file_path)
-        print(f"{file_path} has been deleted.")
-    except FileNotFoundError:
-        print(f"{file_path} does not exist.")
-    finally:
-        return
+def delete_file(file_name: str):
+    all_files = glob(f"./{file_name}.*")
+
+    for file in all_files:
+        try:
+            remove(file)
+            print(f"{file} has been deleted.")
+        except FileNotFoundError:
+            print(f"{file} does not exist.")
+        except Exception as e:
+            print(e)
